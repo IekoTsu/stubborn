@@ -1,0 +1,57 @@
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/styles/nav_bar.css') }}">
+{% endblock %}
+
+<header>
+    <nav class="navbar navbar-expand-lg px-5">
+        <div class="container-fluid d-flex justify-content-around">
+            <div class="logo_container d-flex flex-column">
+                <a href="/"><img class="logo" src="{{ asset('assets/images/Logo.png') }}"></a>
+                <strong class="slogan">Don't compromise on your look</strong>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            {% if app.request.attributes.get('_route') == 'back_office' %}
+                <div class="w-100">
+                    <h1 class="text-center">Back Office</h1>
+                </div>
+            {% endif %}
+ 
+            <div class="collapse navbar-collapse justify-content-end align-center" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="{{ path('app_home') }}" class="nav-link {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}">ACCUEIL</a>
+                    </li>
+
+                    {% if app.user %}
+                        <li class="nav-item">
+                            <a href="{{ path('app_products') }}" class="nav-link {% if app.request.attributes.get('_route') == 'app_products' %}active{% endif %}">BOUTIQUE</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('app_cart') }}" class="nav-link {% if app.request.attributes.get('_route') == 'app_cart' %}active{% endif %}">PANIER</a>
+                        </li>
+
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item">
+                                <a href="{{ path('back_office') }}" class="nav-link {% if app.request.attributes.get('_route') == 'back_office' %}active{% endif %}">BACK OFFICE</a>
+                            </li>
+                        {% endif %}
+
+                        <li class="nav-item">
+                            <a href="{{ path('app_logout') }}" class="nav-link">SE DÉCONNECTER</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a href="{{ path('app_register') }}" class="nav-link {% if app.request.attributes.get('_route') == 'app_register' %}active{% endif %}">S'INSCRIRE</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('app_login') }}" class="nav-link {% if app.request.attributes.get('_route') == 'app_login' %}active{% endif %}">SE CONNECTER</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

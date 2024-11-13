@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}product{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/styles/product.css') }}">
+{% endblock %}
+
+{% block body %}
+    <main class="d-flex flex-column align-items-center justify-content-center flex-grow-1">
+    {% for message in app.flashes('error') %}
+        {% if product.xsStock + product.sStock + product.mStock + product.lStock + product.xlStock == 0 %}
+                            <div class="alert alert-danger" role="alert">
+                                Ce produit est en rupture de stock.
+                            </div>      
+        {% else %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+        {% endif %}
+    {% endfor %}
+    <section class="product_container">
+        <div class="product d-flex flex-row gap-5 w-100">
+                <img class="product_img" src="{{ asset('assets/images/'~ product.img) }}" alt="">
+                <div class="d-flex flex-column align-items-end justify-content-around w-100">
+                    <div class="d-flex justify-content-between align-items-start  w-100">    
+                        <div class="d-flex flex-column justify-content-between w-100">
+                            <p>{{ product.name }}</p>
+                            <p>{{product.price}} €</p>
+                        </div>
+                        {% if product.xsStock + product.sStock + product.mStock + product.lStock + product.xlStock == 0 %}
+                            <p class="text-danger">En rupture de stock.</p>
+                        {% else %}
+                        <select name="sizes" id="sizes">
+                            <option value="" disabled selected>Taille</option>
+                            {% if product.xsStock > 0 %}
+                                <option value="xs">XS</option>
+                            {% endif %}
+                            
+                            {% if product.sStock > 0 %}
+                                <option value="s">S</option>
+                            {% endif %}
+
+                            {% if product.mStock > 0 %}
+                                <option value="m">m</option>
+                            {% endif %}
+
+                            {% if product.lStock > 0 %}
+                                <option value="l">L</option>
+                            {% endif %}
+
+                            {% if product.xlStock > 0 %}
+                                <option value="xl">XL</option>
+                            {% endif %}
+                        </select>
+
+                        {% endif %}
+                    </div>
+
+                    <a href="{{ path('cart_add', { id: product.id }) }}" id="addToCartBtn" class="product_btn">AJOUTER AU PANIER</a>
+                </div>
+            </div>
+    </section>
+</main>
+
+<script>
+    document.getElementById('sizes').addEventListener('change', function(){
+        const selectedSize = this.value;
+
+        const addTocartBtn = document.getElementById('addToCartBtn');
+        addToCartBtn.href = "{{ path('cart_add', { id: product.id }) }}" + "?size=" + selectedSize;
+    })
+</script>
+{% endblock %}

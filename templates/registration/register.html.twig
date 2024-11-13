@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block stylesheets %} 
+    <link rel="stylesheet" href="{{ asset('assets/styles/sign_up.css') }}">
+{% endblock %}
+
+{% block body %}
+<main class="d-flex flex-column align-items-center justify-content-center flex-grow-1">
+    <section class="signup d-flex flex-column p-5">
+        <p class="form_title">S'inscrire</p>
+        <hr>
+
+        {{ form_start(registrationForm, {'attr': {'class': 'custom-form'}}) }} 
+
+        {% if not registrationForm.vars.valid %}
+            <div class="custom-error-messages">
+                {% for child in registrationForm.children %}
+                    {% for error in child.vars.errors %}
+                        <div class="form-error-message">{{ error.message }}</div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <div class="mb-3">
+            {{ form_label(registrationForm.username, 'Nom utilisateur :', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(registrationForm.username, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(registrationForm.email, 'Adresse mail :', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(registrationForm.delivery_address, 'Adresse de livraison :', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(registrationForm.delivery_address, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(registrationForm.plainPassword, 'Mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(registrationForm.confirmPassword, 'Mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(registrationForm.confirmPassword, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Crée un compte</button>
+        
+        {{ form_end(registrationForm) }}
+
+        <hr>
+        <div>
+            <p>Déjà inscrit ?</p>
+            <a href="/login" class="btn btn-primary">Se Connecter</a>
+        </div>
+    </section>
+</main>
+{% endblock %}
+ 

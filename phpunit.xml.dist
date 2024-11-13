@@ -7,14 +7,21 @@
          colors="true"
          bootstrap="tests/bootstrap.php"
          convertDeprecationsToExceptions="false"
->
+         verbose="true"
+         stopOnFailure="false">
+
     <php>
-        <ini name="display_errors" value="1" />
-        <ini name="error_reporting" value="-1" />
-        <server name="APP_ENV" value="test" force="true" />
-        <server name="SHELL_VERBOSITY" value="-1" />
-        <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
-        <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
+        <!-- PHP Settings -->
+        <ini name="display_errors" value="1"/>
+        <ini name="error_reporting" value="-1"/>
+        
+        <!-- Environment Variables -->
+        <server name="APP_ENV" value="test"/>
+        <server name="APP_DEBUG" value="1"/>
+        <server name="SHELL_VERBOSITY" value="-1"/>
+        <server name="SYMFONY_PHPUNIT_REMOVE" value=""/>
+        <server name="SYMFONY_PHPUNIT_VERSION" value="9.5"/>
+        <server name="KERNEL_CLASS" value="App\Kernel"/>
     </php>
 
     <testsuites>
@@ -30,6 +37,7 @@
     </coverage>
 
     <listeners>
+        <!-- Add the Symfony PHPUnit Bridge Listener -->
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
     </listeners>
 

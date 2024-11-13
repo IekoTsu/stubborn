@@ -1,0 +1,166 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add New Sweatshirt{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/styles/back_office.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<div class="container d-flex flex-column justify-content-center align-items-center">
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('alert') %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="add-sweatshirt-form sweatshirt-form">
+    {{ form_start(addForm) }}
+    
+    <div class="form-content d-flex justify-content-around gap-4 ">
+        <!-- Image upload placeholder -->
+        <div class="img-box_container d-flex justify-content-center align-items-center">
+        
+             <label for="add_sweat_shirt_img" id="image-add-box" class="image-upload-box d-flex justify-content-center align-items-center required">
+                     {{ form_widget(addForm.img) }}
+                <div class="custom-image-input" id="custom-image-add-input">Click to add image</div> 
+            </label>
+        </div>
+        
+        <div class="d-flex flex-column align-items-end justify-content-between">
+            <div class="form-fields d-flex row">
+                <div class="form-group col">
+                    {{ form_row(addForm.name, {'label': 'Nom'}) }}
+                </div>
+                <div class="form-group col">
+                    {{ form_row(addForm.price, {'label': 'Prix'}) }}
+                </div>
+                <div class="form-group col">
+                    {{ form_row(addForm.xs_stock, {'label': 'Stock XS'}) }}
+                </div>
+                <div class="form-group col">
+                    {{ form_row(addForm.s_stock, {'label': 'Stock S'}) }}
+                </div>
+                <div class="form-group col"> 
+                    {{ form_row(addForm.m_stock, {'label': 'Stock M'}) }}
+                </div>
+                <div class="form-group col">
+                    {{ form_row(addForm.l_stock, {'label': 'Stock L'}) }}
+                </div>
+                <div class="form-group col">
+                    {{ form_row(addForm.xl_stock, {'label': 'Stock XL'}) }}
+                </div>
+                
+            </div> 
+
+            <div class="form-button">
+                <button type="submit" class="btn-form btn-primary">AJOUTER</button>
+            </div>
+        </div>
+    </div>
+
+    {{ form_end(addForm) }}
+</div>
+
+    <hr>
+
+    <h2>Sweat-shirts existants</h2>
+
+    <div class="sweatshirt-list">
+        {% for sweatShirt in sweatShirts %}
+    <div class="sweatshirt-item sweatshirt-form" style="border: 1px solid #ccc; padding: 10px; margin-top: 10px;">
+
+        {{ form_start(editForms[sweatShirt.id], { 'action': path('app_sweatshirt_edit', {'id': sweatShirt.id}) }) }}
+
+        <div class="form-content d-flex justify-content-around gap-4">
+            <!-- Image upload placeholder -->
+            <div class="img-box_container d-flex justify-content-center align-items-center">
+                <label for="edit_img_{{ sweatShirt.id }}" class="image-upload-box d-flex justify-content-center align-items-center">
+                    {{ form_widget(editForms[sweatShirt.id].img, { 'id': 'edit_img_' ~ sweatShirt.id }) }}
+                    <div class="custom-image-input">
+                        {% if sweatShirt.img %}
+                            <img src="{{ asset('assets/images/' ~ sweatShirt.img) }}" alt="{{ sweatShirt.name }}" style="width: 100px; height: auto;">
+                        {% else %}
+                            Click to add image
+                        {% endif %}
+                    </div>
+                </label>
+            </div>
+
+            <!-- Input fields in a single row -->
+            <div class="d-flex flex-column align-items-end justify-content-between">
+                <div class="form-fields d-flex row">
+                    <div class="form-group col">
+                        {{ form_row(editForms[sweatShirt.id].name, {'label': 'Nom'}) }}
+                    </div>
+                    <div class="form-group col">
+                        {{ form_row(editForms[sweatShirt.id].price, {'label': 'Prix'}) }}
+                    </div>
+                    <div class="form-group col">
+                        {{ form_row(editForms[sweatShirt.id].xs_stock, {'label': 'Stock XS'}) }}
+                    </div>
+                    <div class="form-group col">
+                        {{ form_row(editForms[sweatShirt.id].s_stock, {'label': 'Stock S'}) }}
+                    </div>
+                    <div class="form-group col"> 
+                        {{ form_row(editForms[sweatShirt.id].m_stock, {'label': 'Stock M'}) }}
+                    </div>
+                    <div class="form-group col">
+                        {{ form_row(editForms[sweatShirt.id].l_stock, {'label': 'Stock L'}) }}
+                    </div>
+                    <div class="form-group col">
+                        {{ form_row(editForms[sweatShirt.id].xl_stock, {'label': 'Stock XL'}) }}
+                    </div>
+                    <div class="form-group col">
+                        {{ form_row(editForms[sweatShirt.id].featured, {'label': 'Mettre en avant sur la page d’accueil'}) }}
+                    </div>
+                </div>
+
+                
+                <div class="form-button d-flex gap-3">
+                    <button type="button" class="btn-form btn-danger" onclick="deleteSweatShirt({{ sweatShirt.id }});">
+                        Supprimer
+                    </button>
+    
+                    <button type="submit" class="btn-form btn-secondary">Modifier</button>
+                </div>
+            </div>
+        </div>
+
+        {{ form_end(editForms[sweatShirt.id]) }}
+
+                    <form id= "delete-form-{{ sweatShirt.id }}" action="{{ path('app_sweatshirt_delete', {'id': sweatShirt.id}) }}" method="post" style="display:none;">
+                        <button type="submit" class="btn-form btn-danger">Supprimer</button>
+                    </form>
+
+    </div>
+{% endfor %}
+        
+</div>
+
+<script>
+    document.getElementById('add_sweat_shirt_img').addEventListener('change', function (event) {
+        const files = event.target.files;
+        if (files) {
+            const previewBox = document.querySelector('#image-add-box');
+            const textBox = document.querySelector('#custom-image-add-input');
+            previewBox.style.backgroundImage = `url(${URL.createObjectURL(files[0])})`;
+            previewBox.style.backgroundSize = 'cover';
+            previewBox.style.backgroundPosition = 'center';
+            textBox.style.display = 'none';
+        }
+    });
+
+    function deleteSweatShirt(sweatShirtId) {
+        const form = document.getElementById('delete-form-' + sweatShirtId);
+        form.submit(); 
+    }
+</script>
+
+{% endblock %}

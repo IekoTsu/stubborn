@@ -1,0 +1,51 @@
+<footer class="footer">
+    <div class="footer__content p-5">
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="footer__section ">
+                    <h5 class="footer__title">Stubborn</h5>
+                    <ul class="footer__list list-unstyled">
+                        <li class="footer__item d-flex align-items-center">
+                            <a href="https://www.google.com/maps/place/Piccadilly+Circus,+London,+UK/@51.5098605,-0.1349246,334m/data=!3m2!1e3!4b1!4m6!3m5!1s0x487604d3ff201fc1:0xf08adf0cfb3eb2fe!8m2!3d51.5098597!4d-0.1342809!16zL20vMDFoYzZx?authuser=0&entry=ttu&g_ep=EgoyMDI0MTExMC4wIKXMDSoASAFQAw%3D%3D" target="_blank">
+                                Piccadilly Circus, London W1J 0DA, <br/> Royaume-Uni 
+                            </a> 
+                        </li>
+                        <li class="footer__item d-flex align-items-center"> <a class="footer__link" href="mailto:stubborn@blabla.com" target="_blank">Adresse de contact: stubborn@blabla.com </a> </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3  col-md-6">
+                <div class="footer__section">
+                {% if app.user %}
+                    <h5 class="footer__title">Liens utiles</h5>
+                    <ul class="footer__list list-unstyled">
+                        <li class="footer__item d-flex align-items-top"><a href="/"><i class="fa-solid fa-angle-right me-1 pt-1"></i> Accueil </a></li>
+                        <li class="footer__item d-flex align-items-top"><a href='/products' href='#scrollspyAbout'><i class="fa-solid fa-angle-right me-1 pt-1"></i> Boutique </a></li>
+                        <li class="footer__item d-flex align-items-top"><a href='/cart'><i class="fa-solid fa-angle-right me-1 pt-1"></i> Panier </a></li>
+                        </ul>
+                {% endif %}
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="footer__section w-100">
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="footer__section">
+                    <div class="logo_container d-flex flex-column">
+                        <a href="/"><img class="logo" src="{{ asset('assets/images/Logo.png') }}"></a>
+                        <strong class="slogan">Don't compromise on your look</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .footer{
+        border-top: 1px solid #000;
+    }
+</style>

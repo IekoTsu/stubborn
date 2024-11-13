@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Boutique{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/styles/products.css') }}">
+{% endblock %}
+
+
+
+{% block body %}
+    <main class="d-flex flex-column align-items-center justify-content-center flex-grow-1">
+        <section class="product_list row g-4 ">
+            <div class="col-4">
+                <div>
+                    <select name="prices" id="prices">
+                        <option value="" disabled selected>Fourchette de prix</option>
+                        <option value="">Désactiver le filtre</option>
+                        <option value="10--29">10 à 29 €</option>
+                        <option value="30--35">30 à 35 €</option>
+                        <option value="35--50">35 à 50 €</option>
+                    </select>
+                </div>
+            </div>
+            
+            {% for product in products %}
+                <div class="col-4 product-item" data-price="{{ product.price }}">
+                    <div class="card w-100">
+                        <img src="{{ asset('assets/images/' ~ product.img) }}"  class="card-img-top">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p>{{ product.price }} €</p>
+                            </div>
+                            <a href="{{ path('app_product', {id: product.id}) }}" class="card_btn">VOIR</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            
+            
+        </section>
+    </main>  
+    <script>
+    document.getElementById('prices').addEventListener('change', function() {
+        const selectedPriceRange = this.value.trim();
+
+        const priceRangeArray = selectedPriceRange.split('-');
+        const minPrice = parseFloat(priceRangeArray[0]) || 0;
+        const maxPrice = parseFloat(priceRangeArray[priceRangeArray.length - 1]) || Infinity;
+
+        const products = document.querySelectorAll('.product-item');
+        let productsFound = false;
+
+        products.forEach(product => {
+            const productPrice = parseFloat(product.getAttribute('data-price'));
+
+            console.log(productPrice)
+            
+            // Check if the product price is within the selected range
+            if (productPrice >= minPrice && productPrice <= maxPrice) {
+                product.style.display = 'block';
+                productsFound = true;
+            } else {
+                product.style.display = 'none';
+            }
+        });
+
+        // Show a message if no products are found
+        const noProductsMessage = document.querySelector('.no-products');
+        if (noProductsMessage) {
+            noProductsMessage.style.display = productsFound ? 'none' : 'block';
+        }
+    });
+    </script>
+
+{% endblock %}

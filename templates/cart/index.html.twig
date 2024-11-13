@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/styles/cart.css') }}" >
+{% endblock %}
+
+{% block body %}
+    <main  class="d-flex flex-column align-items-center justify-content-center flex-grow-1">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success" role="alert">
+                {{ message }} 
+            </div>
+        {% endfor %}
+        
+        <section class="cart_list w-100 d-flex flex-column row-gap-3 align-items-center justify-content-center">
+            
+            {% set totalPrice = 0 %}
+            {% if cartItems %}
+                {% for item in cartItems %}
+                    <div class="cart_product d-flex flex-row w-100">
+                        <img src="{{ asset('assets/images/'~ item.product.img) }}" alt="">
+                        <div class="d-flex flex-column align-items-end justify-content-around w-100">
+                            <div class="d-flex justify-content-between w-100">
+                                <p>{{ item.product.name }}</p>
+                                <p>{{ item.product.price }} €</p>
+                                <p>Taille : {{ item.size }}</p>
+                            </div>
+                            <a href="{{ path('cart_remove', { id: item.product.id, size: item.size }) }}" class="cart_btn">RETIRER DU PANIER</a>
+                        </div>
+                    </div>
+                    {% set totalPrice = totalPrice + item.product.price %}
+                {% endfor %}
+
+                <div class="cart_footer d-flex justify-content-end gap-3 w-100">
+                    <div>
+                        <p class="cart_total">TOTAL : {{ totalPrice }} €</p>
+                    </div>
+                    <div class="d-flex flex-column gap-3">
+                        <a href="{{ path('app_payment') }}" class="cart_btn neg_btn"> FINALISER MA COMMANDE </a>
+                        <a href="{{ path('app_products') }}" class="cart_btn pos_btn"> CONTINUER MES ACHATS </a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="cart_product d-flex justify-content-center flex-row w-100">
+                    <p class="cart_empty">Votre panier est vide</p>        
+                </div>
+
+            <div class="cart_footer d-flex justify-content-end gap-3 w-100">
+                <div class="d-flex flex-column gap-3">
+                    <a href="{{ path('app_products') }}" class="cart_btn pos_btn"> CONTINUER MES ACHATS </a>
+                </div>
+            </div>
+            {% endif %}
+        </section>
+    </main>
+{% endblock %}
