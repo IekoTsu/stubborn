@@ -1,0 +1,20 @@
+.product_container{
+    max-width: 900px;
+}
+
+.product{
+    border: solid black 2px;
+    border-radius: 15px;
+    padding: 30px 30px 55px 30px;
+}
+
+.product_img{
+    min-width: 400px;
+}
+
+.product_btn{
+    border:solid black 1.5px ;
+    border-radius: 15px;
+    padding: 8px 32px 8px 32px;
+    background-color: white;
+}

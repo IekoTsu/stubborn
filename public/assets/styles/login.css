@@ -1,0 +1,20 @@
+.login{
+    max-width: 500px;
+    border:solid 2px black;
+    border-radius: 15px;
+}
+
+.form_title{
+    font-size: 1.5rem;
+}
+
+main{
+    display: flex;
+}
+
+hr{
+    border: none;       
+    border-top: 2px solid #66bbff; 
+    margin: 20px 0; 
+    width: 100%;   
+  }

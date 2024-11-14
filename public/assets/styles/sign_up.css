@@ -1,0 +1,29 @@
+.signup{
+    max-width: 500px;
+    border:solid 2px black;
+    border-radius: 15px;
+}
+
+.form_title{
+    font-size: 1.5rem;
+}
+
+main{
+    display: flex;
+}
+
+hr{
+    border: none;       
+    border-top: 2px solid #66bbff; 
+    margin: 20px 0; 
+    width: 100%;   
+  }
+
+  .form-error-message {
+    color: #dc3545;
+    font-size: 1rem;
+    margin-top: 0.25rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    background-color: rgba(220, 53, 69, 0.1);
+}

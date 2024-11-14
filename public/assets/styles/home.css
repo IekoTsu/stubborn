@@ -1,0 +1,23 @@
+.card_container{
+    max-width: 300px;
+}
+
+.product_list{
+    border: solid black 2px ;
+    border-radius: 15px;
+    max-width: 900px;
+    min-width: 800px;
+    margin: 0 100px 0 100px;
+    padding-bottom: 1.5rem;
+}
+
+main{
+    display: flex;
+}
+
+.card_btn{
+    border:solid black 1.5px ;
+    border-radius: 15px;
+    padding: 8px 32px 8px 32px;
+    background-color: white;
+}

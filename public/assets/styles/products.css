@@ -1,0 +1,11 @@
+.product_list{
+    max-width: 1200px;
+    margin: 0 60px 0 60px;
+}
+
+.card_btn{
+    border:solid black 1.5px ;
+    border-radius: 15px;
+    padding: 8px 32px 8px 32px;
+    background-color: white;
+}
